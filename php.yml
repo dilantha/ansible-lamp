@@ -1,0 +1,9 @@
+- hosts: all
+  become: yes
+  vars_files:
+    - /var/tmp/config.yml
+  roles:
+    - geerlingguy.apache-php-fpm
+    - geerlingguy.php-versions
+    - geerlingguy.php
+    - geerlingguy.composer

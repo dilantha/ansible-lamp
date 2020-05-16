@@ -1,0 +1,9 @@
+# https://github.com/geerlingguy/ansible-role-mysql
+- hosts: all
+  become: yes
+  vars:
+    - ansible_python_interpreter: python3
+  vars_files:
+    - /var/tmp/config.yml
+  roles:
+    - { role: geerlingguy.mysql }

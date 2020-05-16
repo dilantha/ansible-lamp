@@ -1,0 +1,64 @@
+---
+- hosts: all
+  become: true
+  vars:
+    - key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+    - packages: [ 'curl', 'vim', 'git', 'ufw', 'fail2ban']
+  vars_files:
+    - /var/tmp/config.yml
+
+  tasks:
+    - name: Add Cloudflare DNS
+      lineinfile:
+        path: /etc/resolv.conf
+        line: "nameserver 1.1.1.1"
+
+    - name: Update and upgrade apt packages
+      apt:
+        upgrade: "yes"
+        update_cache: yes
+        cache_valid_time: 86400 #One day
+
+    - name: Make sure we have a 'wheel' group
+      group:
+        name: wheel
+        state: present
+
+    - name: Create a new regular user with sudo privileges
+      user:
+        name: "{{ deploy_user }}"
+        state: present
+        groups: wheel
+        append: true
+        create_home: true
+        shell: /bin/bash
+
+    - name: Set authorized key for remote user
+      authorized_key:
+        user: "{{ deploy_user }}"
+        state: present
+        key: "{{ key }}"
+
+    - name: Disable password authentication for root
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        state: present
+        regexp: '^#?PermitRootLogin'
+        line: 'PermitRootLogin prohibit-password'
+
+    - name: Update apt
+      apt: update_cache=yes
+
+    - name: Install required system packages
+      apt: name={{ packages }} state=present
+
+    - name: UFW - Allow SSH connections
+      ufw:
+        rule: allow
+        name: OpenSSH
+
+    - name: UFW - Deny all other incoming traffic by default
+      ufw:
+        state: enabled
+        policy: deny
+        direction: incoming

@@ -1,0 +1,18 @@
+- hosts: all
+  become: yes
+  vars_files:
+    - /var/tmp/config.yml
+  roles:
+    - geerlingguy.apache
+
+  tasks:
+    - name: "UFW - Allow HTTP on port 80"
+      ufw:
+        rule: allow
+        port: "80"
+        proto: tcp
+    - name: "UFW - Allow HTTP on port 443"
+      ufw:
+        rule: allow
+        port: "443"
+        proto: tcp
