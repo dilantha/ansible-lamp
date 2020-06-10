@@ -8,6 +8,12 @@ The base setup is borrowed from the [Digital Ocean community ansible scripts](ht
 
 You will need a local install of Ansible and shell access to the deployment server.
 
+Installing Ansible on macOS with Homebrew.
+
+```
+brew install ansible
+```
+
 Depending on the script you are running you will need to install these ansible roles.
 
 ```
@@ -22,7 +28,7 @@ ansible-galaxy install geerlingguy.php-versions
 
 `hosts` is an [Ansible inventory file](https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html).
 
-You will need a minimal `/var/tmp/config.yml` file like this to get going.
+You will need a minimal of `host_vars/hostname.yaml` file like this to get going.
 
 ```yaml
 deploy_user: deploy
@@ -32,13 +38,11 @@ mysql_root_password: "super secret"
 php_version: "7.4"
 ```
 
-This file can live anywhere and you can change the path in the playbooks.
-
 ```
-ansible-playbook -i hosts base.yml
-ansible-playbook -i hosts mysql.yml
-ansible-playbook -i hosts apache.yml
-ansible-playbook -i hosts php.yml
+ansible-playbook -i hosts base.yaml
+ansible-playbook -i hosts mysql.yaml
+ansible-playbook -i hosts apache.yaml
+ansible-playbook -i hosts php.yaml
 ```
 
 ## Ansible Lint

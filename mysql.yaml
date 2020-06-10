@@ -3,7 +3,5 @@
   become: yes
   vars:
     - ansible_python_interpreter: python3
-  vars_files:
-    - /var/tmp/config.yml
   roles:
     - { role: geerlingguy.mysql }

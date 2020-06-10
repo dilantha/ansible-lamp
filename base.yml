@@ -4,8 +4,6 @@
   vars:
     - key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
     - packages: [ 'curl', 'vim', 'git', 'ufw', 'fail2ban']
-  vars_files:
-    - /var/tmp/config.yml
 
   tasks:
     - name: Add Cloudflare DNS
