@@ -3,7 +3,7 @@
   become: true
   vars:
     - key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
-    - packages: [ 'curl', 'vim', 'git', 'ufw', 'fail2ban']
+    - packages: [ 'curl', 'vim', 'git', 'ufw', 'fail2ban', 'zlibc']
 
   tasks:
     - name: Add Cloudflare DNS
