@@ -38,12 +38,48 @@ mysql_root_password: "super secret"
 php_version: "7.4"
 ```
 
+You can use a hosts file like this if you have multiple hosts.
+
+```
+host1
+host2
+```
+
+Then run your commands like this.
+
 ```
 ansible-playbook -i hosts base.yaml
-ansible-playbook -i hosts mysql.yaml
-ansible-playbook -i hosts apache.yaml
-ansible-playbook -i hosts php.yaml
 ```
+
+If you want to target a few hosts you can directly use hostnames from `~/.ssh/config` like this.
+
+```
+ansible-playbook -i host1,host2 base.yaml
+```
+
+For a single host add a trailing command like this.
+
+```
+ansible-playbook -i host1, base.yaml
+```
+
+You can install in stages like this
+
+```
+ansible-playbook -i host1, base.yaml
+ansible-playbook -i host1, mysql.yaml
+ansible-playbook -i host1, apache.yaml
+ansible-playbook -i host1, php.yaml
+```
+
+Or you can take run the LAMP script to combine the above like this.
+
+```
+ansible-playbook -i host1, base.yaml
+ansible-playbook -i host1, lamp.yaml
+```
+
+There is another `apache-php.yaml` that only installs Apache with PHP. The `base.yaml` step is always required to be run first.
 
 ## Ansible Lint
 
