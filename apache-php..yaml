@@ -1,11 +1,13 @@
 - hosts: all
   become: yes
+
   roles:
     - geerlingguy.apache
     - geerlingguy.apache-php-fpm
     - geerlingguy.php-versions
     - geerlingguy.php
     - geerlingguy.composer
+    - geerlingguy.certbot
 
   tasks:
     - name: "UFW - Allow HTTP on port 80"

@@ -81,6 +81,15 @@ ansible-playbook -i host1, lamp.yaml
 
 There is another `apache-php.yaml` that only installs Apache with PHP. The `base.yaml` step is always required to be run first.
 
+## Setup LAMP 
+
+```
+ansible-playbook -i host1, base.yaml
+ansible-playbook -i host1, lamp.yaml
+```
+
+The certbot playboot is not used since it doesn't setup the Apache config files. This part is done manually using https://certbot.eff.org/
+
 ## Ansible Lint
 
 If you make any changes make sure you lint your Ansible playbooks.
