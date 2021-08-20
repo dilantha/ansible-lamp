@@ -5,10 +5,10 @@
   roles:
     - geerlingguy.apache
     - geerlingguy.apache-php-fpm
-    - geerlingguy.composer
     - geerlingguy.mysql
     - geerlingguy.php
     - geerlingguy.php-versions
+    - geerlingguy.composer
 
   tasks:
     - name: "UFW - Allow HTTP on port 80"
