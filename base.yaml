@@ -26,6 +26,15 @@
         create_home: true
         shell: /bin/bash
 
+    - name: Add deploy user to sudo
+      lineinfile:
+        path: /etc/sudoers.d/deploy
+        line: 'deploy ALL=(ALL) NOPASSWD: ALL'
+        state: present
+        mode: 0440
+        create: yes
+        validate: 'visudo -cf %s'
+
     - name: Set authorized key for remote user
       authorized_key:
         user: "{{ deploy_user }}"
