@@ -6,11 +6,19 @@
     - geerlingguy.apache
     - geerlingguy.apache-php-fpm
     - geerlingguy.mysql
-    - geerlingguy.php
     - geerlingguy.php-versions
+    - geerlingguy.php
     - geerlingguy.composer
 
   tasks:
+    - name: "Make virtual host folders"
+      ansible.builtin.file:
+        path: "/var/www/{{ item.servername }}"
+        state: directory
+        mode: '0755'
+        owner: 'deploy'
+        group: 'www-data'
+      loop: "{{ apache_vhosts }}"
     - name: "UFW - Allow HTTP on port 80"
       ufw:
         rule: allow
